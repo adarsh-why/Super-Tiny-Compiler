@@ -19,38 +19,38 @@ def tokenize input
 end
 
 def abs_tree tokens, current
-	
-	token = tokens[current]
-	if token[:type] == 'number'
-		current += 1
-		return {type: 'NumberLiteral', value: token[:value]}, current
-	end
+    
+    token = tokens[current]
+    if token[:type] == 'number'
+        current += 1
+        return {type: 'NumberLiteral', value: token[:value]}, current
+    end
 
-	if (token[:type] == 'paren' and token[:value] == '(')
-		current += 1
-		token = tokens[current]
-		node = {type: 'CallExpression', name: token[:value], params: []}
-		token = tokens[current]
+    if (token[:type] == 'paren' and token[:value] == '(')
+        current += 1
+        token = tokens[current]
+        node = {type: 'CallExpression', name: token[:value], params: []}
+        token = tokens[current]
 
-		while ((token[:type] != 'paren') || (token[:type] == 'paren' && token[:value] != ')'))
-			node[:params] << abs_tree(tokens, current)
-			token = tokens[current += 1]
-		end
+        while ((token[:type] != 'paren') || (token[:type] == 'paren' && token[:value] != ')'))
+            node[:params] << abs_tree(tokens, current)
+            token = tokens[current += 1]
+        end
 
-		current += 1
-		return node, current
-	end
+        current += 1
+        return node, current
+    end
 end
 
 def parser tokens
-	
-	current = 0
-	ast = {type: 'Program', body: []}
-	while (current < tokens.length)
-		node, current = abs_tree(tokens, current)
-		ast[:body] << node
-	end
-	return ast
+    
+    current = 0
+    ast = {type: 'Program', body: []}
+    while (current < tokens.length)
+        node, current = abs_tree(tokens, current)
+        ast[:body] << node
+    end
+    return ast
 end
 
 ###### Test Case for Functions ######
