@@ -19,8 +19,8 @@ def tokenize input
 end
 
 def abs_tree tokens, current
+	
 	token = tokens[current]
-
 	if token[:type] == 'number'
 		current += 1
 		return {type: 'NumberLiteral', value: token[:value]}, current
@@ -38,7 +38,6 @@ def abs_tree tokens, current
 		end
 
 		current += 1
-
 		return node, current
 	end
 end
@@ -47,12 +46,10 @@ def parser tokens
 	
 	current = 0
 	ast = {type: 'Program', body: []}
-
 	while (current < tokens.length)
 		node, current = abs_tree(tokens, current)
 		ast[:body] << node
 	end
-
 	return ast
 end
 
