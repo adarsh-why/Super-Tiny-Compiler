@@ -24,7 +24,7 @@ def parser
             token = @tokens[@current += 1]
             node = {type: 'CallExpression', name: token[:value], params: []}
             token = @tokens[@current += 1]
-            while ((token[:type] != 'paren')|| (token[:type] == 'paren' and token[:value] != ')'))
+            while token[:value] != ')'
                 node[:params].push(walk())
                 token = @tokens[@current]
             end

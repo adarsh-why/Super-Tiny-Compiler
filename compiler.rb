@@ -18,41 +18,33 @@ def tokenize input
     return tokens
 end
 
-def abs_tree tokens, current
-    
-    token = tokens[current]
+def make_tree
+    token = @tokens[@current]
     if token[:type] == 'number'
-        current += 1
-        return {type: 'NumberLiteral', value: token[:value]}, current
-    end
-
-    if (token[:type] == 'paren' and token[:value] == '(')
-        current += 1
-        token = tokens[current]
+        @current += 1
+        return {type: 'NumberLiteral', value: token[:value]}
+    end        
+    if (token[:value] == '(')
+        token = @tokens[@current += 1]
         node = {type: 'CallExpression', name: token[:value], params: []}
-        token = tokens[current]
-
-        while ((token[:type] != 'paren') || (token[:type] == 'paren' && token[:value] != ')'))
-            node[:params] << abs_tree(tokens, current)
-            token = tokens[current += 1]
+        token = @tokens[@current += 1]
+        while token[:value] != ')'
+            node[:params] << make_tree
+            token = @tokens[@current]
         end
-
-        current += 1
-        return node, current
+        @current += 1
+        return node
     end
 end
 
-def parser tokens
-    
-    current = 0
+def parser    
+    @current = 0
     ast = {type: 'Program', body: []}
-    while (current < tokens.length)
-        node, current = abs_tree(tokens, current)
-        ast[:body] << node
+    while (@current < @tokens.length)
+        ast[:body] << make_tree
     end
     return ast
 end
 
-###### Test Case for Functions ######
-tok = tokenize '(add 2 (subtract 4 2))'
-p parser tok
+@tokens = tokenize '(add 2 (subtract 4 2))'
+puts parser
