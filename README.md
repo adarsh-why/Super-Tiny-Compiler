@@ -17,5 +17,7 @@ Add following statements inside run_compiler function to print tokens and AST
 -----------------------------------------------------------------------------
 
 puts "\n\n#{input}\n\n" ---  Prints Input 
+
 puts "#{@tokens}\n\n"   ---  Prints tokenized input
+
 puts "#{parser}\n\n"    ---  Prints Abstract Syntax Tree
