@@ -57,9 +57,13 @@ def code_generate node
     end
 end
 
-input = '(add 3 (subtract 4 2))'
-puts "\n\n#{input}\n\n"
-@tokens = tokenize input
-puts "#{@tokens}\n\n"
-puts "#{parser}\n\n"
-puts "#{code_generate parser}\n\n"
+def run_compiler
+    while true
+        print "Lisp--> C >>  "
+        input = gets.chomp
+        break if input.downcase == 'break'
+        @tokens = tokenize input
+        puts "#{code_generate parser}\n\n"
+    end
+end
+run_compiler
