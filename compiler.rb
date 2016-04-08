@@ -63,7 +63,7 @@ def run_compiler
         input = gets.chomp
         break if input.downcase == 'break'
         @tokens = tokenize input
-        puts "#{code_generate parser}\n\n"
+        puts "#{code_generate parser};\n\n"
     end
 end
 run_compiler
