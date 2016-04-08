@@ -1,4 +1,7 @@
 def tokenize input
+    unless input[0] == '(' and input[-1] == ')' 
+        raise SyntaxError, "Lisp command should start with '(' and end with ')'"
+    end
     tokens = input.gsub!('(', '( ').gsub!(')', ' )').split
     (0...tokens.length).each do |indx|
         case tokens[indx]
@@ -12,6 +15,7 @@ def tokenize input
             tokens[indx] = {type: 'name', value: tokens[indx]}
         end
     end
+    puts tokens
     return tokens
 end
 
@@ -31,7 +35,7 @@ def make_tree
         end
         @current += 1
         return node
-    end        
+    end     
 end
 
 def parser    
