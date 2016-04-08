@@ -15,7 +15,6 @@ def tokenize input
             tokens[indx] = {type: 'name', value: tokens[indx]}
         end
     end
-    puts tokens
     return tokens
 end
 
